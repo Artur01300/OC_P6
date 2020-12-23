@@ -1,4 +1,13 @@
 const express = require('express');//Importation d'express
+const mongoose = require('mongoose');
+
+//Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB
+mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority',
+{
+    useNewUrlParser: true,
+    useUnifiedTopology: true})
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();//Il serra notre appliquation
 
