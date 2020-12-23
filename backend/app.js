@@ -1,6 +1,8 @@
 const express = require('express');//Importation d'express
 const mongoose = require('mongoose');
 
+const path = require('path');//donne accès au chemin de note systeme de fichiers
+
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
 const stuffRoutes = require('./routes/stuff');
 
@@ -21,6 +23,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');//d'envoyer des requêtes avec les méthodes mentionnées ( GET, POST, etc.).
     next();//Qui permet de passer l'execution au middlwar d'apret
 });
+
+//Pour dire à notre applliquation express de servire le dosier image(backend/images), quand on faira requette à  /images
+//Création d'un middelware(app.uss) qui vas réponsre au requette envoyer ('/images'), ici on veut il serve le dossier statique (backend/images)
+//Pour servir un dossier statique on utilise express.static(au quelle on passe __dirname qui est le nom de dossier dans le quelle on vas se tourver
+// au quelle on va ajouter l'image) 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par stuffRoutes
 app.use('/api/stuff', stuffRoutes);
