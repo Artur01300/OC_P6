@@ -5,6 +5,7 @@ const path = require('path');//donne accès au chemin de note systeme de fichier
 
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
 const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 //Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB
 mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority',
@@ -32,5 +33,10 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par stuffRoutes
 app.use('/api/stuff', stuffRoutes);
+
+//enrégiste les routes ici(app.use) et la court attantu par le frontend c'est ('/api/auth')
+//auth ça serra la racine de tousse qui est route lier les authentifications 
+//et on passe les userRoutes
+app.use('/api/auth', userRoutes);
 
 module.exports = app;//On éxporte cet appliquation pour qu'on puisse accedès depuis un autre fichier dans notre projet
