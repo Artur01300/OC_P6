@@ -6,5 +6,6 @@ const stuffCtrl = require('../controllers/stuff');
 router.get('/', stuffCtrl.getAllThing);
 router.get('/:id', stuffCtrl.getOneThing);
 router.post('/', stuffCtrl.createThing);
+router.put('/:id', stuffCtrl.modifyThing);
 
 module.exports = router;

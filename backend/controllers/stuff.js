@@ -45,3 +45,27 @@ exports.createThing = (req, res, next) => {
     .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
     .catch(error => res.status(400).json({ error }));//on peut écrire avec le racoucie: json({ error }) ou json({ error: error})
 };
+
+//updateOne permet de mettre à jour le Thing dans la base des données
+//le 1er argument, du updateOne, c'est l'objet de comparaison pour savoir objet on modifie(celui dant l'id est = à l'id qui est envoyé dans les paramètre). Le 2em argument c'est le nouvelle objet
+//on récupair le core de la requette (.req.body) et on dit l'id correspond à celui des paramètre 
+exports.modifyThing = (req, res, next)=>{
+    
+    //ici il y a 2 situation à prendre en compt: la 1er situation, c'est que lutilisateur a modifié symplement des informations de son objet sans
+    //rajouter une nouvelle image, 2em situation, il ajoute une image car les format des requette ne serront pas les même
+    //on teste si il y a une nouvelle image on aurra un req.file donc on saurra comment traiter. Si on a pas une nouvelle image, on poura treter
+    //symplement la requette comme objet directement
+    //on créer un tingObjet et avce l'operateur ternaire ? on veus savoir si req.file exicte si il exist on aura un type d'objet { } si n'existe pas:
+    // on aura un autre type d'objet {}. Exeple {} : {}
+    const thingObject = req.file ?
+    {
+        //si le fichier exist on récuper avec json.parse toute les information sur l'objet qui sont dans cette partie de la requette
+        //et on générer une nouvelle image d'Url
+        ...JSON.parse(req.body.thing),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`//on générer une nouvelle image d'Url
+    } : {...req.body};//ici il existe pas et on prond le core de la requette 
+
+    Thing.updateOne({_id: req.params.id}, {...thingObject, _id: req.params.id})//au leiu metre ...req.body on met ...thingObject 
+    .then(() => res.status(200).json({message: 'Objet modifié !'}))
+    .catch(error => res.status(400).json({ error }));
+};

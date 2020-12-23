@@ -1,7 +1,8 @@
 const express = require('express');//Importation d'express
 const mongoose = require('mongoose');
 
-const stuffRoutes = require('./routes/stuff');//Importation de router
+//Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
+const stuffRoutes = require('./routes/stuff');
 
 //Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB
 mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority',
