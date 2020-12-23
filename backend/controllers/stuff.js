@@ -1,5 +1,8 @@
 const Thing = require('../models/Thing');
 
+//Pour pouvoir accèder au sytème de fichier. fs = file systeme
+const fs = require('fs');
+
 
 //and point(url visé par l'application /api/stuff). L'application frontend va essayer de fair une requête à l'api, à cet URL
 //méthode finde() qui retourne une promis
@@ -68,4 +71,29 @@ exports.modifyThing = (req, res, next)=>{
     Thing.updateOne({_id: req.params.id}, {...thingObject, _id: req.params.id})//au leiu metre ...req.body on met ...thingObject 
     .then(() => res.status(200).json({message: 'Objet modifié !'}))
     .catch(error => res.status(400).json({ error }));
+};
+
+//méthode get() pour répondre uniquement aux demandes GET à cet endpoint
+//l'utilisation en face du segment dynamique de la route pour la rendre accessible en tant que paramètre(/api/stuff/:id')
+//méthode findOne() dans notre modèle Thing pour trouver le Thing unique ayant le même _id que le paramètre de la requête ce Thing est ensuite retourné dans 
+//une Promise et envoyé au front-end si aucun Thing n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée.
+exports.deleteThing = (req, res, next)=>{
+
+    //on va aller cherche l'url de l'image qui va nous permetre accèser au nom de fichier et on pourra supprimer ce fichier
+    //on veut touver ce qui a _id qui corespond à celui dans les paramètres de la requette (findOne({ _id: req.params.id })
+    Thing.findOne({ _id: req.params.id })
+    .then(thing => {
+
+        //on récupère le thing et avec ce thing on veux récupérer non pas just l'url de l'image, on veut le nom de fichier précisément
+        //pour extrère ce fichier, on créer filename avec ce nom de fichier on vas appeller une function du packege fs donc fs.unlink() pour supprimer
+        //un fichier le premier argument (`images/${filename}`) qui correspond au chemin du fichier, le 2em argument c'est le collback (() =>),
+        //ce qu'il faut faire une fois le fichier supprimer. Donc on veut supprimer le Thing dans la base de donnée( le fichier) 
+      const filename = thing.imageUrl.split('/images/')[1];
+      fs.unlink(`images/${filename}`, () => {
+        Thing.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+          .catch(error => res.status(400).json({ error }));
+      });
+    })
+    .catch(error => res.status(500).json({ error }));
 };

@@ -11,7 +11,6 @@ router.get('/', stuffCtrl.getAllThing);
 router.get('/:id', stuffCtrl.getOneThing);
 router.post('/', multer, stuffCtrl.createThing);
 router.put('/:id', multer, stuffCtrl.modifyThing);
-// router.delete('/:id', stuffCtrl.deleteThing);
-
+router.delete('/:id', stuffCtrl.deleteThing);
 
 module.exports = router;
