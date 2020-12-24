@@ -1,7 +1,7 @@
 const express = require('express');//
 const router = express.Router();//création un routeur Express.
 
-const stuffCtrl = require('../controllers/stuff');
+const stuffCtrl = require('../controllers/sauces');
 
 //permet protéter les routes en ajouter auth. exp. router.post('/', auth, stuffCtrl.createThing);
 //avant la protéction des courte: router.post('/', stuffCtrl.createThing);
