@@ -1,6 +1,8 @@
 //on a besoin du paquage du cryptage pour les mode passe (--save bcrypt)
 const bcrypt = require('bcrypt');
 
+const jwt = require('jsonwebtoken');//on importe jsonwebtoken
+
 //on a besoin  de notre model user car on va enrégister et lire des user dans ce middlwar
 const User = require('../models/User');
 
@@ -33,6 +35,9 @@ exports.signup = (req, res, next) => {//Permet d'enrégister de nouveau users(re
 //on va utiliser le bcrypt pour comparer le mot de passe envoyé par l'utilisateur avec l'hach qui est enregistré avec l'user qu'ont ici (.then(user=> if...))
 //on utilise la fonction compart(bcrypt.copare) pour comparer. on compart le mot de passe envoyé avec la requête (req.body.password,) et avec le hach (user.password)
 //qui est enregistré dans notre user, dans notre document user
+//** token
+//on appelle le function sign(jwt.sign()), qui est le fonction de jsonwebtoken, qui prond quelque arguments:
+//1er argument c'est les données qu'on veux encoder(c'est qu'on appelle le payload)
 exports.login = (req, res, next) => {//Permet de connécter les users existant 
     User.findOne({email: req.body.email})//
     .then(user => {
@@ -49,7 +54,13 @@ exports.login = (req, res, next) => {//Permet de connécter les users existant
             //et on envoe la token
             res.status(200).json({
                 userId: user._id,
-                token: 'TOKEN'
+                token: jwt.sign(
+                //création d'objet avec user id(userId), qui serra l'identifiant d'utilisateur du user(user._id).
+                //qui doit être le mème comme ce lui de 1em ligne de suppérieur de tocken:jwt.sign, cet à dire '.json({serId: user._id'
+                    {userId: user._id},
+                    'RANDOM_TOKEN_SECRET',//ce 2em argument c'est la clé secré d'encodage
+                    {expiresIn: '24h'}//3em argument c'est un argument de configuration où on applique une expiration de notre token dans 24h
+                )
             });
         })
         .catch(error => res.status(500).json({error}));
