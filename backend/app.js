@@ -1,4 +1,5 @@
 const express = require('express');//Importation d'express
+const bodyParser = require('body-parser');//Imortation de body-parser
 const mongoose = require('mongoose');
 
 const path = require('path');//donne accès au chemin de note systeme de fichiers
@@ -30,6 +31,8 @@ app.use((req, res, next) => {
 //Pour servir un dossier statique on utilise express.static(au quelle on passe __dirname qui est le nom de dossier dans le quelle on vas se tourver
 // au quelle on va ajouter l'image) 
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use(bodyParser.json());//Il va trensformer le core de la requette en l'objet JS
 
 //On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par stuffRoutes
 app.use('/api/stuff', stuffRoutes);
