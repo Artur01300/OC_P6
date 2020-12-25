@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const path = require('path');//donne accès au chemin de note systeme de fichiers
 
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
-const stuffRoutes = require('./routes/sauces');
+const stuffRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 //Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB

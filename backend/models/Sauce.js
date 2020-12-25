@@ -12,8 +12,8 @@ const saucesSchema = mongoose.Schema({
     heat: {type: Number, required: true},
     likes: {type: Number, required: true},
     dislikes: {type: Number, required: true},
-    usersLiked: {type: String, required: true},
-    usersDisliked: {type: String, required: true},
+    usersLiked: {type: [String], required: true},
+    usersDisliked: {type: [String], required: true},
 });
 
 //Nous exportons ce schéma en tant que modèle Mongoose appelé « Thing », le rendant par là même disponible pour notre application Express.
