@@ -1,4 +1,4 @@
-const Thing = require('../models/Thing');
+const Thing = require('../models/Sauce');
 
 //Pour pouvoir accèder au sytème de fichier. fs = file systeme
 const fs = require('fs');
@@ -25,7 +25,7 @@ exports.getOneThing = (req, res, next) => {
 
 //Traite les requêtes post
 //delete retire le chemps _id avant copier l'objet, l'id ne serra pas le bon car il vas être générer automatiquement par mongoDB
-//Création de nouvelle instance de notre Thing (new Thing) au quelle on va passer un objet qui va contenir toutes les infos qu'on a besoin(title, désciption etc.)
+//Création de nouvelle instance de notre Thing (new Thing) au quelle on va passer un objet qui va contenir toutes les infos qu'on a besoin(userid, name, désciption etc.)
 //( title: req.body.title) ou avec l'opérateur spread: ...req.body.//il va copier les chemps qu'il y a dans la body de la request(dans le core de la requette) et il va détiller le titre, description etc.
 //la méthode save() enregistre simplement le Thing dans la base de données
 exports.createThing = (req, res, next) => {
