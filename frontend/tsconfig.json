@@ -5,7 +5,6 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "importHelpers": true,
     "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

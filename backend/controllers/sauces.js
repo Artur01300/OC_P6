@@ -1,8 +1,7 @@
-const Sauce = require('../models/Sauce');
+const Sauce = require('../models/Sauces');
 
 //Pour pouvoir accèder au sytème de fichier. fs = file systeme
 const fs = require('fs');
-
 
 //and point(url visé par l'application /api/sauce). L'application frontend va essayer de fair une requête à l'api, à cet URL
 //méthode finde() qui retourne une promis
@@ -32,10 +31,10 @@ exports.createSauces = (req, res, next) => {
 
     //ici on mofifie de la création d'objet dans la base de donnée car le format de la requette à été oubligatoirement changé pour pourvoir
     //envoyer un fichier avec un requette, c'est a dire pour que lutilisateur puisse ajouter une image
-    //danc mentent on a sur le core de la requette: req.body.thing qui serra une chène de caractaire et qui sera un objet javascript sous form
-    //de chène de caractaire. il vas faloir qu'on analise cet chène pour la trensforme en objet pour extraire l'objet json de thing
+    //danc mentent on a sur le core de la requette: req.body.sauce qui serra une chène de caractaire et qui sera un objet javascript sous form
+    //de chène de caractaire. il vas faloir qu'on analise cet chène pour la trensforme en objet pour extraire l'objet json de sauce
     const saucesObject = JSON.parse(req.body.sauce);
-
+   
     delete saucesObject._id;//au lieu d'enlever  req.body._id en enlève sauceObjet._id(avant il été comme  ça: delete req.body._id)
     const sauce = new Sauce({
         //au lieu d'enlever  req.body en enlève sauceObjet (avant il été comme  ça: req.body) en ajoutent un élément car le frontend
@@ -97,3 +96,8 @@ exports.deleteSauces = (req, res, next)=>{
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+// exports.createLikes = (req, res, next) => {
+
+
+// };

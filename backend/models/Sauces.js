@@ -10,13 +10,14 @@ const saucesSchema = mongoose.Schema({
     mainPepper: {type: String, required: true},
     imageUrl: {type: String, required: true},
     heat: {type: Number, required: true},
-    likes: {type: Number, required: true},
-    dislikes: {type: Number, required: true},
-    usersLiked: {type: [String], required: true},
-    usersDisliked: {type: [String], required: true},
+    likes: {type: Number},
+    dislikes: {type: Number},
+    usersLiked: {type: [String]},
+    usersDisliked: {type: [String]},
 });
+
 
 //Nous exportons ce schéma en tant que modèle Mongoose appelé « Thing », le rendant par là même disponible pour notre application Express.
 //Exprotation le modéle terminé(module.exports) et on export le mongouse.model.
 //Le premier argument passé c'est le nom du type('Thing'), douzième argoument c'est le schéma qu'on va utiliser(thingSchema), qu'on a créé
-module.exports = mongoose.model('Sauce', saucesSchema);
+module.exports = mongoose.model('Sauces', saucesSchema);

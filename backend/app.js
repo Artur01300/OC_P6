@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const path = require('path');//donne accès au chemin de note systeme de fichiers
 
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
-const stuffRoutes = require('./routes/sauce');
+const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 //Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB
 mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority',
+
 {
     useNewUrlParser: true,
     useUnifiedTopology: true})
@@ -17,6 +18,7 @@ mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<d
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();//Il serra notre appliquation
+
 
 //Pour éviter l'erreurs de CORS le middleware ajouté avant la route d'API
 app.use((req, res, next) => {
@@ -35,11 +37,12 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(bodyParser.json());//Il va trensformer le core de la requette en l'objet JS
 
 //On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par stuffRoutes
-app.use('/api/sauces', stuffRoutes);
+app.use('/api/sauces', saucesRoutes);
 
 //enrégiste les routes ici(app.use) et la court attantu par le frontend c'est ('/api/auth')
 //auth ça serra la racine de tousse qui est route lier les authentifications 
 //et on passe les userRoutes
 app.use('/api/auth', userRoutes);
+
 
 module.exports = app;//On éxporte cet appliquation pour qu'on puisse accedès depuis un autre fichier dans notre projet
