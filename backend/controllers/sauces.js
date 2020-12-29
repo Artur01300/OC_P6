@@ -28,7 +28,7 @@ exports.getOneSauces = (req, res, next) => {
 //( title: req.body.title) ou avec l'opérateur spread: ...req.body.//il va copier les chemps qu'il y a dans la body de la request(dans le core de la requette) et il va détiller le titre, description etc.
 //la méthode save() enregistre simplement le Sauce dans la base de données
 exports.createSauces = (req, res, next) => {
-
+    
     //ici on mofifie de la création d'objet dans la base de donnée car le format de la requette à été oubligatoirement changé pour pourvoir
     //envoyer un fichier avec un requette, c'est a dire pour que lutilisateur puisse ajouter une image
     //danc mentent on a sur le core de la requette: req.body.sauce qui serra une chène de caractaire et qui sera un objet javascript sous form
@@ -51,7 +51,7 @@ exports.createSauces = (req, res, next) => {
 //updateOne permet de mettre à jour le Thing dans la base des données
 //le 1er argument, du updateOne, c'est l'objet de comparaison pour savoir objet on modifie(celui dant l'id est = à l'id qui est envoyé dans les paramètre). Le 2em argument c'est le nouvelle objet
 //on récupair le core de la requette (.req.body) et on dit l'id correspond à celui des paramètre 
-exports.modifySauces = (req, res, next)=>{
+exports.modifySauces = (req, res, next) => {
     
     //ici il y a 2 situation à prendre en compt: la 1er situation, c'est que lutilisateur a modifié symplement des informations de son objet sans
     //rajouter une nouvelle image, 2em situation, il ajoute une image car les format des requette ne serront pas les même
@@ -97,7 +97,44 @@ exports.deleteSauces = (req, res, next)=>{
     .catch(error => res.status(500).json({ error }));
 };
 
-// exports.createLikes = (req, res, next) => {
+exports.createLikes = (req, res, next) => {
+    const like = req.body.like;
+    const user =  req.body.userId;
 
+    Sauce.findOne({ _id: req.params.id }) // récuprération de la sauce
+    .then(sauce => {
 
-// };
+        if (sauce.usersLiked.includes(user)) { // Si le user aime deja la sauce et qu'il clic à nouveau sur le btn j'aime
+        
+            Sauce.updateOne({ _id: req.params.id }, { $pull: { usersLiked: user }, $inc: { likes: -1 } }) // alors je l'enleve des userLiked et je décrémente le compteur de like de 1
+            .catch(error => res.status(400).json({ error }));
+        }
+
+        if (sauce.usersDisliked.includes(user)) { // Si le user n'aime deja pas la sauce et qu'il clic à nouveau sur le btn je n'aime pas 
+            
+            Sauce.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: user }, $inc: { dislikes: -1 } }) // alors je l'enleve des userDisliked et je décrémente le compteur de Dislike de 1
+            .catch(error => res.status(400).json({ error }));
+        }
+    })
+    .then(() => {
+        if (like === 1) { // si le user aime la sauce
+
+            Sauce.updateOne({ _id: req.params.id }, { $push: { usersLiked: user }, $inc: { likes: 1 } }) // alors je met l'user dans le tableau des userLiked et j'incrémente le compteur de likes de 1
+           
+            .then(() => res.status(200).json({ message: user + " j'aime " }))
+            .catch(error => res.status(400).json({ error }));
+            
+        } else if (like === -1) { // si le user n'aime pas la sauce
+
+            Sauce.updateOne({ _id: req.params.id }, { $push: { usersDisliked: user }, $inc: { dislikes: 1 } }) // alors je met l'user dans le tableau des userDisliked et j'incrémente le compteur de Dislikes de 1
+            
+            .then(() => res.status(200).json({ message: user + " je n'aime pas " }))
+            .catch(error => res.status(400).json({ error }));
+        }
+
+        if (like === 0) { // le user est neutre
+            res.status(200).json({ message: user + " je suis neutre " })
+        }
+
+    }).catch(error => res.status(404).json({ error }));
+};
