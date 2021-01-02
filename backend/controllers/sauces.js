@@ -2,6 +2,7 @@ const Sauce = require('../models/Sauces');
 
 //Pour pouvoir accèder au sytème de fichier. fs = file systeme
 const fs = require('fs');
+const { timeStamp } = require('console');
 
 //and point(url visé par l'application /api/sauce). L'application frontend va essayer de fair une requête à l'api, à cet URL
 //méthode finde() qui retourne une promis
@@ -48,28 +49,34 @@ exports.createSauces = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));//on peut écrire avec le racoucie: json({ error }) ou json({ error: error})
 };
 
-//updateOne permet de mettre à jour le Thing dans la base des données
-//le 1er argument, du updateOne, c'est l'objet de comparaison pour savoir objet on modifie(celui dant l'id est = à l'id qui est envoyé dans les paramètre). Le 2em argument c'est le nouvelle objet
-//on récupair le core de la requette (.req.body) et on dit l'id correspond à celui des paramètre 
 exports.modifySauces = (req, res, next) => {
-    
-    //ici il y a 2 situation à prendre en compt: la 1er situation, c'est que lutilisateur a modifié symplement des informations de son objet sans
-    //rajouter une nouvelle image, 2em situation, il ajoute une image car les format des requette ne serront pas les même
-    //on teste si il y a une nouvelle image on aurra un req.file donc on saurra comment traiter. Si on a pas une nouvelle image, on poura treter
-    //symplement la requette comme objet directement
-    //on créer un tingObjet et avce l'operateur ternaire ? on veus savoir si req.file exicte si il exist on aura un type d'objet { } si n'existe pas:
-    // on aura un autre type d'objet {}. Exeple {} : {}
-    const sauceObject = req.file ?
-    {
-        //si le fichier exist on récuper avec json.parse toute les information sur l'objet qui sont dans cette partie de la requette
-        //et on générer une nouvelle image d'Url
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`//on générer une nouvelle image d'Url
-    } : {...req.body};//ici il existe pas et on prond le core de la requette 
 
-    Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})//au leiu metre ...req.body on met ...sauceObject 
-    .then(() => res.status(200).json({message: 'Objet modifié !'}))
-    .catch(error => res.status(400).json({ error }));
+  //on teste si il y a une nouvelle image on aurra un req.file donc on saurra comment traiter.
+  if (req.file) {
+    Sauce.findOne({ _id: req.params.id })
+    .then((sauce) => {
+      // On supprime l'ancienne image du serveur
+      const filename = sauce.imageUrl.split('/images/')[1];
+      fs.unlinkSync(`images/${filename}`)
+    });
+    sauceObject = {
+      // On ajoute la nouvelle image
+      ...JSON.parse(req.body.sauce),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    };
+  } else {
+    // Si la modification ne contient pas de nouvelle image
+    sauceObject = { ...req.body }
+  };
+
+  Sauce.updateOne(
+    // On applique les paramètre de sauceObject
+    { _id: req.params.id },
+    { ...sauceObject, _id: req.params.id }
+  )
+  .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
+  .catch((error) => res.status(400).json({ error }));
+
 };
 
 //méthode get() pour répondre uniquement aux demandes GET à cet endpoint
@@ -103,6 +110,7 @@ exports.createLikes = (req, res, next) => {
 
     Sauce.findOne({ _id: req.params.id }) // récuprération de la sauce
     .then(sauce => {
+        console.log(sauce)
 
         if (sauce.usersLiked.includes(user)) { // Si le user aime deja la sauce et qu'il clic à nouveau sur le btn j'aime
         
