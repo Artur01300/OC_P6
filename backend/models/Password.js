@@ -2,7 +2,7 @@ const passwordValidator = require('password-validator');
 
 const passSchema = new passwordValidator();//Create a schema
 
-//Ajoutez-y des propriétés
+//Ajoutez-y des propriétés:  au moins une minuscule et majuscule, 8 caracter min et 100 max, 2 chiffre minimoume et pas d'espace
 passSchema
     .is().min(8)                                    // Minimum length 8
     .is().max(100)                                  // Maximum length 100

@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
   if(!passSchema.validate(req.body.password)){
 
     return res.status(400).json({error: 
-      'Passworn is not strong !' 
+      'Password is not strong !' 
       + 
       passSchema.validate('try again', {list: true})
     })
