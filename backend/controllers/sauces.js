@@ -65,7 +65,7 @@ exports.modifySauces = (req, res, next) => {
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     };
   } else {
-    // Si la modification ne contient pas de nouvelle image
+    // Si la modification ne contient pas de nouvelle image alors on modifie le cores de la requette
     sauceObject = { ...req.body }
   };
 

@@ -21,7 +21,7 @@ const jwt = require('jsonwebtoken');//pour vérifier let token
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SEC-(*/#{~é&2REksfqqsdfk[]*-/@£$¤*ù%µT');
     const userId = decodedToken.userId;
     //on vérifi si jamais il y a user id avec la requette qui correspond bien à cel de token:
     //si jamais on a userId dans le core de la requête(req.body.userId) et que selui si est différant de userId

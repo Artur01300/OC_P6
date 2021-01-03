@@ -13,13 +13,15 @@ const User = require('../models/User');
 //le solde(10) combien de l'algoritme de hachage c'est à dire 10 tour qui est suffisent de créer un mot de passe sécurisé
 //le .then récupère le hache de mot de passe et en suit on vas engrégistrer dans un nouveau user(const user = new User) dans la base de donnée
 exports.signup = (req, res, next) => {//Permet d'enrégister de nouveau users(req.body.password)
+
     bcrypt.hash(req.body.password, 10)
     .then(hach => {//on récupère le hache de mot de passe et en suit on enrégistre dans nouveau user(new User) et ensuit on onrégistre dans la basse de donné
         const user = new User({//créatio de notre nouvelle outilisateur avec le modèle mongoose
             email: req.body.email,//en passe l'adresse quie fournie dans le core de la requette
             password: hach//on enrégisre le hache qui est crée 2 ligne à haut(.then(hach =>{)
         });
-        user.save()//On enrégistre dans la base de donnée
+        user
+        .save()//On enrégistre dans la base de donnée
         .then(()=>res.status(201).json({message: 'Utilisateur créé !'}))//en envoie 201 pour la création de reçource et renvoie le message
         .catch(error => res.status(400).json({error}))
     })
@@ -39,7 +41,7 @@ exports.signup = (req, res, next) => {//Permet d'enrégister de nouveau users(re
 //on appelle le function sign(jwt.sign()), qui est le fonction de jsonwebtoken, qui prond quelque arguments:
 //1er argument c'est les données qu'on veux encoder(c'est qu'on appelle le payload)
 exports.login = (req, res, next) => {//Permet de connécter les users existant 
-    User.findOne({email: req.body.email})//
+    User.findOne({email: req.body.email})
     .then(user => {
         if(!user){//si on n'a pas trouver les user on envoie le 401 pour dire non autorisé
             return res.status(401).json({error: 'Utilisateur non trouvé !'});
@@ -58,7 +60,7 @@ exports.login = (req, res, next) => {//Permet de connécter les users existant
                 //création d'objet avec user id(userId), qui serra l'identifiant d'utilisateur du user(user._id).
                 //qui doit être le mème comme ce lui de 1em ligne de suppérieur de tocken:jwt.sign, cet à dire '.json({serId: user._id'
                     {userId: user._id},
-                    'RANDOM_TOKEN_SECRET',//ce 2em argument c'est la clé secré d'encodage
+                    'RANDOM_TOKEN_SEC-(*/#{~é&2REksfqqsdfk[]*-/@£$¤*ù%µT',//ce 2em argument c'est la clé secré d'encodage
                     {expiresIn: '24h'}//3em argument c'est un argument de configuration où on applique une expiration de notre token dans 24h
                 )
             });
