@@ -43,5 +43,7 @@ app.use('/api/sauces', saucesRoutes);
 //et on passe les userRoutes
 app.use('/api/auth', userRoutes);
 
+// console.log(process.env.NODE_ENV);
+
 
 module.exports = app;//On éxporte cet appliquation pour qu'on puisse accedès depuis un autre fichier dans notre projet
