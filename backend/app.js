@@ -2,21 +2,28 @@ const express = require('express');//Importation d'express
 const bodyParser = require('body-parser');//Imortation de body-parser
 const mongoose = require('mongoose');
 
+//Ne pas permettre à un utilisateur de faire de multiples requêtes en même temps
+const rateLimit = require('express-rate-limit');
+
 const path = require('path');//donne accès au chemin de note systeme de fichiers
+
+//charge les variables d'environnement
+require('dotenv').config();
 
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-//Connection l'appliquation à mon cluster à l'aide des pilotes natifs de MonogDB
-mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority', // originale 
+// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-const app = express();//Il serra notre appliquation
+    
+    const app = express();//Il serra notre appliquation
 
 
 //Pour éviter l'erreurs de CORS le middleware ajouté avant la route d'API
@@ -26,6 +33,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');//d'envoyer des requêtes avec les méthodes mentionnées ( GET, POST, etc.).
     next();//Qui permet de passer l'execution au middlwar d'apret
 });
+
+const limiter = rateLimit({
+    windowMs: 60000, //15minutes
+    max: 3, // limite chaque IP à 100 requêtes par fenêtre
+    message: "texte"
+})
 
 //Pour dire à notre applliquation express de servire le dosier image(backend/images), quand on faira requette à  /images
 //Création d'un middelware(app.uss) qui vas réponsre au requette envoyer ('/images'), ici on veut il serve le dossier statique (backend/images)
@@ -44,6 +57,9 @@ app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
 
 // console.log(process.env.NODE_ENV);
+
+//  s'applique à toutes les demandes
+app.use(limiter);
 
 
 module.exports = app;//On éxporte cet appliquation pour qu'on puisse accedès depuis un autre fichier dans notre projet
