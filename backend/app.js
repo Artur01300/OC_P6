@@ -2,9 +2,6 @@ const express = require('express');//Importation d'express
 const bodyParser = require('body-parser');//Imortation de body-parser
 const mongoose = require('mongoose');
 
-//Ne pas permettre à un utilisateur de faire de multiples requêtes en même temps
-const rateLimit = require('express-rate-limit');
-
 const path = require('path');//donne accès au chemin de note systeme de fichiers
 
 //charge les variables d'environnement
@@ -34,12 +31,6 @@ app.use((req, res, next) => {
     next();//Qui permet de passer l'execution au middlwar d'apret
 });
 
-const limiter = rateLimit({
-    windowMs: 60000, //15minutes
-    max: 3, // limite chaque IP à 100 requêtes par fenêtre
-    message: "texte"
-})
-
 //Pour dire à notre applliquation express de servire le dosier image(backend/images), quand on faira requette à  /images
 //Création d'un middelware(app.uss) qui vas réponsre au requette envoyer ('/images'), ici on veut il serve le dossier statique (backend/images)
 //Pour servir un dossier statique on utilise express.static(au quelle on passe __dirname qui est le nom de dossier dans le quelle on vas se tourver
@@ -55,11 +46,5 @@ app.use('/api/sauces', saucesRoutes);
 //auth ça serra la racine de tousse qui est route lier les authentifications 
 //et on passe les userRoutes
 app.use('/api/auth', userRoutes);
-
-// console.log(process.env.NODE_ENV);
-
-//  s'applique à toutes les demandes
-app.use(limiter);
-
 
 module.exports = app;//On éxporte cet appliquation pour qu'on puisse accedès depuis un autre fichier dans notre projet
