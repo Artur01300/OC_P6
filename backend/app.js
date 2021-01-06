@@ -2,6 +2,8 @@ const express = require('express');//Importation d'express
 const bodyParser = require('body-parser');//Imortation de body-parser
 const mongoose = require('mongoose');
 
+const cookieSession = require('cookie-session');
+
 const path = require('path');//donne accès au chemin de note systeme de fichiers
 
 //charge les variables d'environnement
@@ -35,6 +37,20 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');//d'envoyer des requêtes avec les méthodes mentionnées ( GET, POST, etc.).
     next();//Qui permet de passer l'execution au middlwar d'apret
 });
+
+app.use(
+    cookieSession({//Create a new cookie session middleware with the provided options
+        name: 'sessionName',
+        secret: "ssh!quet/'secret",//Une chaîne qui sera utilisée comme clé unique si elle n'est pas fournie
+        cookie: {
+            maxAge : 1000 * 60 * 60 * 2,//2 hours
+            secure: true,//indique le cookie doit être envoyé uniquement via HTTPS
+            httpOnly: true,// le cookie doit uniquement être envoyé via HTTP 
+            domain: "http://localhost:3000/",
+        },
+    })
+);
+
 
 //Pour dire à notre applliquation express de servire le dosier image(backend/images), quand on faira requette à  /images
 //Création d'un middelware(app.uss) qui vas réponsre au requette envoyer ('/images'), ici on veut il serve le dossier statique (backend/images)

@@ -110,7 +110,6 @@ exports.createLikes = (req, res, next) => {
 
     Sauce.findOne({ _id: req.params.id }) // récuprération de la sauce
     .then(sauce => {
-        console.log(sauce)
 
         if (sauce.usersLiked.includes(user)) { // Si le user aime deja la sauce et qu'il clic à nouveau sur le btn j'aime
         
