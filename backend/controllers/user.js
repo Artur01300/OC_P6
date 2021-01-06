@@ -2,14 +2,10 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');//on importe jsonwebtoken
+const password = require('../middleware/password');
 
 //on a besoin  de notre model user car on va enrégister et lire des user dans ce middlwar
 const User = require('../models/User');
-
-//Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 caractère spécial, une longeur d'un moins 10
-const regex = {
-    password: /^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/ 
-};
 
 //Ce contrôleur a besoin 2 middlwars: la function signup et login
 //on hache le mode de passe avec une function(bcrypt.hash()) ansachon 
