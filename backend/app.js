@@ -7,6 +7,9 @@ const path = require('path');//donne accès au chemin de note systeme de fichier
 //charge les variables d'environnement
 require('dotenv').config();
 
+//Helmet vous aide à sécuriser vos applications Express en définissant divers en-têtes HTTP. 
+const helmet = require('helmet');
+
 //Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
@@ -20,7 +23,9 @@ mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<d
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
     
-    const app = express();//Il serra notre appliquation
+const app = express();//Il serra notre appliquation
+
+app.use(helmet());//Pour sécuriser l'app
 
 
 //Pour éviter l'erreurs de CORS le middleware ajouté avant la route d'API
