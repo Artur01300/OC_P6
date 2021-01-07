@@ -16,8 +16,8 @@ const helmet = require('helmet');
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://Boblesponge:Bob123@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority', // originale 
-// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority`,
+
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -40,11 +40,11 @@ app.use((req, res, next) => {
 
 app.use(
     cookieSession({//Create a new cookie session middleware with the provided options
-        name: 'sessionName',
+        name: 'session',
         secret: "ssh!quet/'secret",//Une chaîne qui sera utilisée comme clé unique si elle n'est pas fournie
         cookie: {
             maxAge : 1000 * 60 * 60 * 2,//2 hours
-            secure: true,//indique le cookie doit être envoyé uniquement via HTTPS
+            secure: false,//accepte http et https
             httpOnly: true,// le cookie doit uniquement être envoyé via HTTP 
             domain: "http://localhost:3000/",
         },
