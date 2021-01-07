@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');//Importation du mongoose
+const mongoose = require('mongoose');
 
-//On ajoute ce validateur comme plug-in à nontre schéma une fois plugins installé (npm i-save mongoose unique validateur)
+//On ajoute ce validateur comme plug-in à nontre schéma une fois plugins installé
 const uniqueValidator = require('mongoose-unique-validator');
 
-//Création de notre schèma en utilisant la function schéma de mongoose
 //On stoque les informations comme email est le mot de passe de l'utilisateur
 const userSchema = mongoose.Schema({
     email : {type: String, required: true, unique: true},//unique:true signifie que ça ne sera pas possible de s'inscrire plusieurs fois avec même adresse mail

@@ -1,4 +1,3 @@
-//on a besoin l'express pour créer un routeur
 const express = require('express');
 const router = express.Router();//création du routeur
 
@@ -23,7 +22,6 @@ const tryLoginLimiter = rateLimit({
     max: 3, 
     message: "Réessayez dans 3 minutes"
 });
-
 
 //création de route poste avec la méthode signup et login
 router.post('/signup', createAcountLimiter, verifyEmail, verifyPassword, userCtrl.signup);

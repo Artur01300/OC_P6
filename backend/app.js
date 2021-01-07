@@ -1,8 +1,6 @@
-const express = require('express');//Importation d'express
-const bodyParser = require('body-parser');//Imortation de body-parser
+const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
-const cookieSession = require('cookie-session');
 
 const path = require('path');//donne accès au chemin de note systeme de fichiers
 
@@ -12,7 +10,7 @@ require('dotenv').config();
 //Helmet vous aide à sécuriser vos applications Express en définissant divers en-têtes HTTP. 
 const helmet = require('helmet');
 
-//Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/stuff. 
+//Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/sauce. 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
@@ -38,32 +36,16 @@ app.use((req, res, next) => {
     next();//Qui permet de passer l'execution au middlwar d'apret
 });
 
-app.use(
-    cookieSession({//Create a new cookie session middleware with the provided options
-        name: 'session',
-        secret: "ssh!quet/'secret",//Une chaîne qui sera utilisée comme clé unique si elle n'est pas fournie
-        cookie: {
-            maxAge : 1000 * 60 * 60 * 2,//2 hours
-            secure: false,//accepte http et https
-            httpOnly: true,// le cookie doit uniquement être envoyé via HTTP 
-            domain: "http://localhost:3000/",
-        },
-    })
-);
 
-
-//Pour dire à notre applliquation express de servire le dosier image(backend/images), quand on faira requette à  /images
-//Création d'un middelware(app.uss) qui vas réponsre au requette envoyer ('/images'), ici on veut il serve le dossier statique (backend/images)
-//Pour servir un dossier statique on utilise express.static(au quelle on passe __dirname qui est le nom de dossier dans le quelle on vas se tourver
-// au quelle on va ajouter l'image) 
+//Pour dire à notre applliquation express de servire le dosier image(backend/images)le on vas se tourver
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(bodyParser.json());//Il va trensformer le core de la requette en l'objet JS
 
-//On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par stuffRoutes
+//On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par sauseRoutes
 app.use('/api/sauces', saucesRoutes);
 
-//enrégiste les routes ici(app.use) et la court attantu par le frontend c'est ('/api/auth')
+//enrégiste les routes ici(app.use) et la route attantu par le frontend c'est ('/api/auth')
 //auth ça serra la racine de tousse qui est route lier les authentifications 
 //et on passe les userRoutes
 app.use('/api/auth', userRoutes);

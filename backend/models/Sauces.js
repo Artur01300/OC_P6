@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');//Importation du mongoose
 
 //Création du Schema des données 'saucesSchema' en utilisant la fonction mongoose dans le quelle on vas passer un onbjet 
-//qui vas dicter les différant chemps dant notre thing aurra besoin
+//qui vas dicter les différant chemps dant notre sauce aurra besoin
 const saucesSchema = mongoose.Schema({
     userId: {type: String, required: true},//La clé du nome de cheme est 'userId' et on crée un objet pour confiqurer le id
     name: {type: String, required: true},//required ture signifie sans name on ne pourra pas enrégistrer un sauce dans la base
