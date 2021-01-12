@@ -12,14 +12,14 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 
 `DB_USER="username de la base de donnée mongodb"`  
 `DB_PASS="password de la base de donnée mongodb"`
-`PORT= 3000`
+`PORT= 3000"`
 
 
 ## Technologies à utiliser
-● framework : Express ;
-● serveur : NodeJS ;
-● base de données : MongoDB ;
-● toutes les opérations de la base de données doivent utiliser le pack Mongoose avec des schémas de données stricts.
+* framework : Express ;
+* serveur : NodeJS ;
+* base de données : MongoDB ;
+* toutes les opérations de la base de données doivent utiliser le pack Mongoose avec des schémas de données stricts.
 
 ## Procédure
 1. Cloner le projet.
