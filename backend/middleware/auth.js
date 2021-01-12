@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');//pour vérifier let token
 
+//rocupération le token dans le header, ls split[1] récupère la 2em élément du tableau
+//2em étap décode le token, 3em étap on récupère userid qui est dans le tocken
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];

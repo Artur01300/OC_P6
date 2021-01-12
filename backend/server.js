@@ -2,6 +2,8 @@
 const http = require('http');//Importation du http package node
 const app = require('./app');//Importation de notre application
 
+require('dotenv').config();
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
   if (isNaN(port)) {
@@ -47,4 +49,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);//L'écoute du serveur a les requêtes envoyées 
+server.listen(port);//L'écoute du serveur à les requêtes envoyées 

@@ -19,5 +19,5 @@ const saucesSchema = mongoose.Schema({
 
 //Nous exportons ce schéma en tant que modèle Mongoose appelé « Sauce », le rendant par là même disponible pour notre application Express.
 //Exprotation le modéle terminé(module.exports) et on export le mongouse.model.
-//Le premier argument passé c'est le nom du type('Sauce'), douzième argoument c'est le schéma qu'on va utiliser(thingSchema), qu'on a créé
+//Le premier argument passé c'est le nom du type('Sauces'), douzième argoument c'est le schéma qu'on va utiliser(saucesSchema), qu'on a créé
 module.exports = mongoose.model('Sauces', saucesSchema);

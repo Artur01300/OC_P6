@@ -8,6 +8,12 @@ ajouter leurs sauces préférées et liker ou disliker les sauces proposées par
 
 ### Le back-end
 
+A la racine de backend, créer un fichier `.env` (backend/.env), mettre les valeurs correctes pour se connecter à une base de donnée mongodb:
+
+`DB_USER="username de la base de donnée mongodb"`  
+`DB_PASS="password de la base de donnée mongodb"`  
+
+
 ## Technologies à utiliser
 ● framework : Express ;
 ● serveur : NodeJS ;
@@ -18,7 +24,8 @@ ajouter leurs sauces préférées et liker ou disliker les sauces proposées par
 1. Cloner le projet.
 2. Exécuter npm install.
 3. Exécuter npm start pour le back-end.
-4. Exécuter ng serve pour le front-end.
+4. Exécution de l’API sur http://localhost:3000.
+5. Exécuter ng serve pour le front-end sur http://localhost:4200/. L'application va se recharger automatiquement si vous modifiez un fichier source.
 
 
 ### Le front-end
@@ -27,6 +34,4 @@ Le projet a été généré avec [Angular CLI](https://github.com/angular/angula
 
 Pour faire fonctionner le projet, vous devez installer node-sass à part.
 
-## Development server
-
-Démarrer `ng serve` pour avoir accès au serveur de développement. Rendez-vous sur `http://localhost:4200/`. L'application va se recharger automatiquement si vous modifiez un fichier source.
+Pour accéder aux sauces: **créer un compte**, mettre un **mot de passe fort** (minimum 8 caractères avec des **majuscules**, **minuscules** et **deux chiffres**).

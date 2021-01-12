@@ -10,10 +10,9 @@ require('dotenv').config();
 //Helmet vous aide à sécuriser vos applications Express en définissant divers en-têtes HTTP. 
 const helmet = require('helmet');
 
-//Importation de router pour enrégistrer ensuit notre routeur pour toutes les demandes effectuées vers /api/sauce. 
+//Importation de router pour enrégistrer ensuit toutes les demandes effectuées vers /api/sauce. 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
-
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nz8on.mongodb.net/<dbname>?retryWrites=true&w=majority`,
 {
@@ -28,21 +27,21 @@ const app = express();//Il serra notre appliquation
 app.use(helmet());//Pour sécuriser l'app
 
 
-//Pour éviter l'erreurs de CORS le middleware ajouté avant la route d'API
+//Pour éviter l'erreurs de CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');//d'accéder à notre API depuis n'importe quelle origine
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');//d'ajouter les headers mentionnés aux requêtes envoyées vers notre API (Origin , X-Requested-With , etc.)
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');//d'envoyer des requêtes avec les méthodes mentionnées ( GET, POST, etc.).
-    next();//Qui permet de passer l'execution au middlwar d'apret
+    next();
 });
 
 
-//Pour dire à notre applliquation express de servire le dosier image(backend/images)le on vas se tourver
+//Pour dire à notre applliquation express de servire le dosier image(backend/images)
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(bodyParser.json());//Il va trensformer le core de la requette en l'objet JS
 
-//On va remettr le début la route et on va dir pour cet route là, on utilise le routeur qui est exposé par sauseRoutes
+//On va remettr le début la route et on va dire pour cet route là, on utilise le routeur qui est exposé par sauseRoutes
 app.use('/api/sauces', saucesRoutes);
 
 //enrégiste les routes ici(app.use) et la route attantu par le frontend c'est ('/api/auth')

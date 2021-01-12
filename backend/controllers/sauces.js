@@ -2,6 +2,7 @@ const Sauce = require('../models/Sauces');
 
 //Pour pouvoir accèder au sytème de fichier. fs = file systeme
 const fs = require('fs');
+
 const { timeStamp } = require('console');
 
 
@@ -52,7 +53,7 @@ exports.modifySauces = (req, res, next) => {
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     };
   } else {
-    // Si la modification ne contient pas de nouvelle image alors on modifie le cores de la requette
+    // Si la modification ne contient pas de nouvelle image alors on modifie le cors de la requette
     sauceObject = { ...req.body }
   };
 
