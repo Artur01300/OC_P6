@@ -8,6 +8,8 @@ const password = require('../middleware/password');
 //on a besoin  de notre model user car on va enrégister et lire des user dans ce middlwar
 const User = require('../models/User');
 
+require('dotenv').config();
+
 exports.signup = (req, res, next) => {
 
     bcrypt.hash(req.body.password, 10)
@@ -47,7 +49,7 @@ exports.login = (req, res, next) => {
                 token: jwt.sign(
                 //création d'objet avec user id(userId), qui serra l'identifiant d'utilisateur du user(user._id)
                     {userId: user._id},
-                    'RANDOM_TOKEN_SEC-(*/#{~é&2REksfqqsdfk[]*-/@£$¤*ù%µT',//ce 2em argument c'est la clé secré d'encodage
+                    `${process.env.TOKEN}`,//ce 2em argument c'est la clé secré d'encodage
                     {expiresIn: '24h'}//3em argument c'est un argument de configuration où on applique une expiration de notre token dans 24h
                 )
             });

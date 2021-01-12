@@ -11,7 +11,8 @@ ajouter leurs sauces préférées et liker ou disliker les sauces proposées par
 A la racine de backend, créer un fichier `.env` (backend/.env), mettre les valeurs correctes pour se connecter à une base de donnée mongodb:
 
 `DB_USER="username de la base de donnée mongodb"`  
-`DB_PASS="password de la base de donnée mongodb"`  
+`DB_PASS="password de la base de donnée mongodb"`
+`PORT= 3000`
 
 
 ## Technologies à utiliser
