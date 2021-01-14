@@ -13,6 +13,7 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 `DB_USER="username de la base de donnée mongodb"`  
 `DB_PASS="password de la base de donnée mongodb"`
 `PORT= 3000"`
+`TOKEN= "`
 
 
 ## Technologies à utiliser
@@ -23,10 +24,11 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 
 ## Procédure
 1. Cloner le projet.
-2. Exécuter npm install.
-3. Exécuter npm start pour le back-end.
-4. Exécution de l’API sur http://localhost:3000.
-5. Exécuter ng serve pour le front-end sur http://localhost:4200/. L'application va se recharger automatiquement si vous modifiez un fichier source.
+2. Installez @angular/cli globalement 
+3. Exécutez npm install pour le backend et forntend.
+4. Exécutez npm start pour le back-end.
+5. Exécution de l’API sur http://localhost:3000.
+6. Exécutez ng serve pour le front-end sur http://localhost:4200/.
 
 
 ### Le front-end

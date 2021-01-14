@@ -2,6 +2,7 @@
 const http = require('http');//Importation du http package node
 const app = require('./app');//Importation de notre application
 
+//charge les variables d'environnement pour la ligne 18
 require('dotenv').config();
 
 const normalizePort = val => {
