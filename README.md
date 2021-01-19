@@ -37,4 +37,4 @@ Le projet a été généré avec [Angular CLI](https://github.com/angular/angula
 
 Pour faire fonctionner le projet, vous devez installer node-sass à part.
 
-Pour accéder aux sauces: **créer un compte**, mettre un **mot de passe fort** (minimum 8 caractères avec des **majuscules**, **minuscules** et **deux chiffres**).
+Pour accéder aux sauces: **créer un compte**, mettre un **mot de passe fort** (minimum 8 caractères avec des **majuscules**, **minuscules**, **deux chiffres** et **un symbole**).

@@ -1,3 +1,4 @@
+//gére les fichiers entrantes dans les requêtes HTTP
 const multer = require('multer');
 
 //en utilisant les MIME_TYPES, on génère les extensions du fichier en préparant un dictionniair

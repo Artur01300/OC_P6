@@ -1,20 +1,17 @@
 const Sauce = require('../models/Sauces');
 
-//Pour pouvoir accèder au sytème de fichier. fs = file systeme
+//Pour pouvoir accèder au sytème de fichier et modifier. fs = file systeme
 const fs = require('fs');
 
-const { timeStamp } = require('console');
-
-
 //récoupération du tableau de tout les sauces
-exports.getAllSauces = (req, res, next)=>{
+exports.getAllSauces = (req, res, next) => {
   Sauce.find()
   .then(sauces => res.status(200).json(sauces))
   .catch(error => res.status(400).json({ error }));
 };
 
-
-exports.getOneSauces = (req, res, next) => {
+//Renvoie la sauce avec l'ID fourni
+exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({_id: req.params.id})
   .then(sauce => res.status(200).json(sauce))
   .catch(error => res.status(404).json({ error }));
@@ -25,11 +22,11 @@ exports.createSauces = (req, res, next) => {
   const saucesObject = JSON.parse(req.body.sauce);
   delete saucesObject._id;
 
+  //... est un operateur spread, est un racourci de javascript
   const sauce = new Sauce({
     ...saucesObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
-
   sauce.save()
   .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
   .catch(error => res.status(400).json({ error }));
@@ -38,6 +35,7 @@ exports.createSauces = (req, res, next) => {
 exports.modifySauces = (req, res, next) => {
 
   //on teste si il y a une nouvelle image on aurra un req.file donc on saurra comment traiter.
+  //on veut touver si _id corespond à celui dans les paramètres id de la requette
   if (req.file) {
     Sauce.findOne({ _id: req.params.id })
 
@@ -64,7 +62,6 @@ exports.modifySauces = (req, res, next) => {
   )
   .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
   .catch((error) => res.status(400).json({ error }));
-
 };
 
 exports.deleteSauces = (req, res, next)=>{
@@ -98,8 +95,8 @@ exports.createLikes = (req, res, next) => {
 
     if (sauce.usersDisliked.includes(user)) { // Si le user n'aime deja pas la sauce et qu'il clic à nouveau sur le btn je n'aime pas 
         
-        Sauce.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: user }, $inc: { dislikes: -1 } }) // alors je l'enleve des userDisliked et je décrémente le compteur de Dislike de 1
-        .catch(error => res.status(400).json({ error }));
+      Sauce.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: user }, $inc: { dislikes: -1 } }) // alors je l'enleve des userDisliked et je décrémente le compteur de Dislike de 1
+      .catch(error => res.status(400).json({ error }));
     }
   })
   .then(() => {

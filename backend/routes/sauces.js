@@ -13,11 +13,11 @@ const auth = require('../middleware/auth');
 //si on met avant le ficier sera pas autentifier. donc on vérifi d'abord l'autontification et ensuit on traite le fichier image
 const multer = require('../middleware/multer-config');
 
-router.get('/', auth, rateLimit, saucesCtrl.getAllSauces);
-router.get('/:id', auth,rateLimit, saucesCtrl.getOneSauces);
+router.get('/', auth, rateLimit, saucesCtrl.getAllSauces);//Renvoie le tableau de toutes les sauces dans la base de données
+router.get('/:id', auth,rateLimit, saucesCtrl.getOneSauce);//Renvoie la sauce avecl'ID fourni
 router.post('/', auth, rateLimit, multer, saucesCtrl.createSauces);
-router.put('/:id', auth, rateLimit, multer, saucesCtrl.modifySauces);
-router.delete('/:id', auth, rateLimit, saucesCtrl.deleteSauces);
-router.post('/:id/like', auth, rateLimit, saucesCtrl.createLikes);
+router.put('/:id', auth, rateLimit, multer, saucesCtrl.modifySauces);//Met à jour la sauce avec l'identifiant fourni.
+router.delete('/:id', auth, rateLimit, saucesCtrl.deleteSauces);//Supprime la sauce avec l'ID fourni.
+router.post('/:id/like', auth, rateLimit, saucesCtrl.createLikes);//Définit le statut "j'aime" pour userID fourni. 
 
 module.exports = router;

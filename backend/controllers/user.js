@@ -1,6 +1,7 @@
 //on a besoin du paquage du cryptage pour les mode passe
 const bcrypt = require('bcrypt');
 
+//tokens d'authentification permettant aux users de se conneter qu'une seule fois à leur compte
 const jwt = require('jsonwebtoken');
 
 const password = require('../middleware/password');
@@ -29,7 +30,6 @@ exports.signup = (req, res, next) => {
 }
 
 //Login permet de connecter aux users exictent 
-
 exports.login = (req, res, next) => {
     User.findOne({email: req.body.email})
     .then(user => {
@@ -43,13 +43,13 @@ exports.login = (req, res, next) => {
                 return res.status(401).json({error: 'Mot de passe incorrect !'});
             }
             //si on arrive ici alors la comparaison est true. dans ce cas-là on renvoie la bonne connexion et l'objet json qui contient id d'user dans la base
-            //et on envoe la token
+            //et on envoie la token
             res.status(200).json({
                 userId: user._id,
                 token: jwt.sign(
                 //création d'objet avec user id(userId), qui serra l'identifiant d'utilisateur du user(user._id)
                     {userId: user._id},
-                    `${process.env.TOKEN}`,//ce 2em argument c'est la clé secré d'encodage
+                    `${process.env.TOKEN}`,//ce 2em argument c'est la clé secret d'encodage
                     {expiresIn: '24h'}//3em argument c'est un argument de configuration où on applique une expiration de notre token dans 24h
                 )
             });
