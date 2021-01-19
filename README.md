@@ -12,7 +12,7 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 
 `DB_USER="username de la base de donnée mongodb"`  
 `DB_PASS="password de la base de donnée mongodb"`
-`PORT= "3000"`
+`PORT= " "`
 `TOKEN= " "`
 
 
