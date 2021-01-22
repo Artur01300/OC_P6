@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
 });
 
 //pour le validateur (uniqueValidator) on aplique un shcéma avant d'en faire un modèle
-//qui nous permet de ne pas avoir plusieurs utilisateurs avec même adress mail
+//qui nous permet de ne pas avoir plusieurs utilisateurs avec même address email
 userSchema.plugin(uniqueValidator);
 
 //On exporte ce schéma sous forme modèle 

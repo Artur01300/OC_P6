@@ -19,7 +19,7 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 ## Technologies à utiliser
 * framework : Express ;
 * serveur : NodeJS ;
-* base de données : MongoDB ;
+* base de données : MongoDB Atlas;
 * toutes les opérations de la base de données doivent utiliser le pack Mongoose avec des schémas de données stricts.
 
 ## Procédure
@@ -33,7 +33,7 @@ A la racine de backend, créer un fichier `.env` (backend/.env), mettre les vale
 
 ### Le front-end
 
-Le projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
+Le projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 Pour faire fonctionner le projet, vous devez installer node-sass à part.
 

@@ -1,4 +1,4 @@
-//on a besoin du paquage du cryptage pour les mode passe
+//on a besoin du paquage du cryptage pour les mots de passe
 const bcrypt = require('bcrypt');
 
 //tokens d'authentification permettant aux users de se conneter qu'une seule fois à leur compte
@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
                 userId: user._id,
                 token: jwt.sign(
                 //création d'objet avec user id(userId), qui serra l'identifiant d'utilisateur du user(user._id)
-                    {userId: user._id},
+                {userId: user._id},
                     `${process.env.TOKEN}`,//ce 2em argument c'est la clé secret d'encodage
                     {expiresIn: '24h'}//3em argument c'est un argument de configuration où on applique une expiration de notre token dans 24h
                 )
